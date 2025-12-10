@@ -21,8 +21,8 @@
       "webhookId": "7027d80c-68d7-4507-b536-8fb92b0c4acb",
       "credentials": {
         "telegramApi": {
-          "id": "c9JLPEYYWXEsngz7",
-          "name": "Telegram account"
+          "id": "",
+          "name": ""
         }
       },
       "onError": "continueRegularOutput"
@@ -44,8 +44,8 @@
       "webhookId": "5011b7c7-84e7-4b9b-b264-be1887d6f0dc",
       "credentials": {
         "telegramApi": {
-          "id": "c9JLPEYYWXEsngz7",
-          "name": "Telegram account"
+          "id": "",
+          "name": ""
         }
       }
     },
@@ -67,8 +67,8 @@
       "alwaysOutputData": true,
       "credentials": {
         "assemblyAiApi": {
-          "id": "7AoGoDRGHY7hIGN2",
-          "name": "AssemblyAI account"
+          "id": "",
+          "name": ""
         }
       }
     },
@@ -87,14 +87,14 @@
       "name": "Get a transcription",
       "credentials": {
         "assemblyAiApi": {
-          "id": "7AoGoDRGHY7hIGN2",
-          "name": "AssemblyAI account"
+          "id": "",
+          "name": ""
         }
       }
     },
     {
       "parameters": {
-        "listId": "691d3a3ada5dafab21cae53c",
+        "listId": "",
         "name": "=Tarefa   {{ $json.words[0].text }}",
         "description": "={{ $json.text }}",
         "additionalFields": {}
@@ -109,8 +109,8 @@
       "name": "Create a card",
       "credentials": {
         "trelloApi": {
-          "id": "XdpQoRtZzSihzB1t",
-          "name": "Trello account"
+          "id": "",
+          "name": ""
         }
       }
     },
@@ -132,8 +132,8 @@
       "name": "Create a transcription",
       "credentials": {
         "assemblyAiApi": {
-          "id": "7AoGoDRGHY7hIGN2",
-          "name": "AssemblyAI account"
+          "id": "",
+          "name": ""
         }
       },
       "onError": "continueRegularOutput"
