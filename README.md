@@ -1,6 +1,6 @@
 # Task-List-com-N8N
 
-Este é um projeto desenvolvido no n8n para realizar a transcrição de mensagens de voz recebidas no Telegram para criar uma task em um board no Trello. As técnologias utilizadas foram
+Este é um projeto desenvolvido no n8n para realizar a transcrição de mensagens de voz recebidas no Telegram para criar uma task em um board no Trello. 
 
 ## Instalação e Configuração
 
@@ -51,6 +51,12 @@ cd Task-List-com-N8N
 ### Estrutura do Projeto
 - `V_msg_trans.json` - Arquivo principal do workflow
 - `README.md` - Este arquivo
+
+### Técnologias Utilizadas ###
+
+- n8n
+- Assembly Ai
+- Trello
 
 ### Suporte
 Para dúvidas, consulte a [documentação do n8n](https://docs.n8n.io).
