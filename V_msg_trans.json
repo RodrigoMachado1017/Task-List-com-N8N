@@ -1,0 +1,237 @@
+{
+  "name": "IHC",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0b4d1e42-e59b-4312-bc11-5095de87d864",
+      "name": "Telegram Trigger",
+      "webhookId": "7027d80c-68d7-4507-b536-8fb92b0c4acb",
+      "credentials": {
+        "telegramApi": {
+          "id": "c9JLPEYYWXEsngz7",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "7ae1d22a-8f12-46d6-8a86-978681056c5c",
+      "name": "Get a file",
+      "webhookId": "5011b7c7-84e7-4b9b-b264-be1887d6f0dc",
+      "credentials": {
+        "telegramApi": {
+          "id": "c9JLPEYYWXEsngz7",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileInput": "=data"
+      },
+      "type": "n8n-nodes-assemblyai.assemblyAi",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6bb1a271-6054-4418-b178-3f01c47ee627",
+      "name": "Upload a file",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "alwaysOutputData": true,
+      "credentials": {
+        "assemblyAiApi": {
+          "id": "7AoGoDRGHY7hIGN2",
+          "name": "AssemblyAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "transcriptId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-assemblyai.assemblyAi",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "45aa0792-da8e-4b16-96bd-e007ba4454fb",
+      "name": "Get a transcription",
+      "credentials": {
+        "assemblyAiApi": {
+          "id": "7AoGoDRGHY7hIGN2",
+          "name": "AssemblyAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "listId": "691d3a3ada5dafab21cae53c",
+        "name": "=Tarefa   {{ $json.words[0].text }}",
+        "description": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "465e34a2-e1df-4d34-90ff-f64b4d152558",
+      "name": "Create a card",
+      "credentials": {
+        "trelloApi": {
+          "id": "XdpQoRtZzSihzB1t",
+          "name": "Trello account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "audioUrl": "={{ $json.upload_url }}",
+        "additionalFields": {
+          "format_text": true,
+          "language_code": "pt"
+        }
+      },
+      "type": "n8n-nodes-assemblyai.assemblyAi",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "7317064f-86e2-41b7-b950-d25ba31a1289",
+      "name": "Create a transcription",
+      "credentials": {
+        "assemblyAiApi": {
+          "id": "7AoGoDRGHY7hIGN2",
+          "name": "AssemblyAI account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        0
+      ],
+      "id": "a3498105-9e0e-401f-b28f-8c2a9e6c28a1",
+      "name": "Wait",
+      "webhookId": "30ac776b-7805-47dc-a975-784ab3952758"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file": {
+      "main": [
+        [
+          {
+            "node": "Create a transcription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a transcription": {
+      "main": [
+        [
+          {
+            "node": "Create a card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a transcription": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get a transcription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ce93996e-187d-4f39-8eef-a14d1e978de7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2487615cc8716b7d99eae781ce641a21647c33ff65cfddc768c2298a7e165885"
+  },
+  "id": "2fVxWL14NxYmHY5U",
+  "tags": []
+}
